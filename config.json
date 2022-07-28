@@ -1,0 +1,15 @@
+{
+  "mqtt": {
+    "host": "192.168.168.182",
+    "port": "1883",
+    "topic": "Plant/Data",
+    "username": "van",
+    "password": "123"
+  },
+
+  "soil": {
+    "pin": 32
+  },
+
+  "interval": 1
+}
