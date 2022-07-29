@@ -13,6 +13,7 @@ class MQTT:
         self.password = password
         self.keepalive = keepalive
 
+        # connect to mqtt client
         self.publisher = MQTTClient(
             client_id=ubinascii.hexlify(unique_id()),
             server=self.host,
@@ -22,12 +23,9 @@ class MQTT:
             keepalive=self.keepalive
         )
 
-        try:
 
-            self.publisher.connect()
+        self.publisher.connect()
 
-        except OSError:
-            self.restart_and_reconnect()
 
     def restart_and_reconnect(self):
         print('Failed to connect to MQTT broker. Reconnecting...')
