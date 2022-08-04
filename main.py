@@ -1,5 +1,6 @@
 import json
 import time
+import machine
 from mqtt import MQTT
 from soil import Soil
 from bh1750 import BH1750
@@ -43,3 +44,5 @@ while True:
     # send the data to mqtt
     publisher.send_message(json.dumps(plant_data))
     # publisher.send_message(f"test")
+
+    # machine.deepsleep(5000) # deepsleep mode for 5s
