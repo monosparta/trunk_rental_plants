@@ -1,0 +1,285 @@
+openapi: 3.0.0
+info:
+  description: 會員植物管理系統
+  version: 0.0.0
+  title: Plant Manager
+tags:
+  - name: user
+    description: 使用者 API
+  - name: admin
+    description: 管理員 API
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: Get User from token
+      security:
+        - auth: []
+          authMethod: []
+      responses:
+        '200':
+          description: Query Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Invalid header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Login
+      requestBody:
+        $ref: '#/components/requestBodies/auth'
+      responses:
+        '200':
+          description: Login success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginSuccessResponse'
+        '400':
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid user or password!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: Register
+      requestBody:
+        $ref: '#/components/schemas/UserRegisterRequest'
+      responses:
+        '200':
+          description: registration success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Registration success
+        '404':
+          description: registration failure
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Registration failure
+  /user/password:
+    put:
+      tags:
+        - user
+      summary: Change the password
+      responses:
+        '200':
+          description: Operation success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Operation success
+  /rent/list/others:
+    get:
+      tags:
+        - user
+      summary: Get other user's plant information
+      requestBody:
+        description: Send the token to backend
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserTokenRequest'
+      responses:
+        '200':
+          description: Send other's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtherUserPlantResponse'
+  /rent/register:
+    post:
+      tags:
+        - user
+      summary: Registration success or in waiting list
+      requestBody: 
+        description: Send the token to backend
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserTokenRequest'
+      responses:
+        '200':
+          description: Registration successful
+        '403':
+          description: Registration failed
+  /rent/plantInfo:
+    post:
+      tags:
+        - user
+      requestBody: 
+        description: Send the token to backend
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserTokenRequest'
+      responses:
+        '200':
+          description: Get plant info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantInfo'
+
+
+# servers
+servers:
+  - url: http://192.168.56.100:3000/api
+  - url: http://192.168.168.83:3000/api
+  
+  
+# components
+components:
+  securitySchemes:
+    auth:
+      type: apiKey
+      in: header
+      name: Auth
+    authMethod:
+      type: apiKey
+      in: header
+      name: Auth-Method
+  requestBodies:
+    auth:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthRequest'
+      description: 登入資訊
+      required: true
+  schemas:
+
+    # data
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+        card:
+          type: string
+        phoneNumber:
+          type: string
+    Rent:
+      type: object
+      properties:
+        plant:
+          $ref: '#/components/schemas/Plant'
+        container:
+          type: integer
+          format: int32
+    Plant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        intro:
+          type: string
+        imgPath:
+          type: string
+        nickName:
+          type: string
+        minHumid:
+          type: integer
+          format: int32
+
+    # request
+    AuthRequest:
+      type: object
+      properties:
+        account:
+          type: string
+        password:
+          type: string
+    UserRegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+    UserTokenRequest:
+      properties:
+        Token:
+          type: string
+
+    # response
+    LoginSuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        rents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rent'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    UserResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        rents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rent'
+    UserRegisterResponse:
+      type: object
+      properties:
+        200:
+          description: registration success
+        404:
+          description: registration failure
+    OtherUserPlantResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plant'
+
+
+
