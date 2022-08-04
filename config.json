@@ -27,6 +27,11 @@
     "pin": 32
   },
 
+  "light":{
+    "sda": 21,
+    "scl": 22
+  },
+
   "interval": 1,
 
   "container_ID": 1

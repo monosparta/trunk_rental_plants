@@ -7,9 +7,9 @@ gc.collect()
 
 # wifi list
 wifi_list = [
-    {"ssid": 'TrunkStudio-2.4G', "password": '22019020'},
-    {"ssid": 'monospace', "password": '22012870'},
-    {"ssid": '204', "password": '24632270'}
+    {'ssid': 'TrunkStudio-2.4G', 'password': '22019020'},
+    {'ssid': 'monospace', 'password': '22012870'},
+    {'ssid': '204', 'password': '24632270'}
 ]
 
 station = network.WLAN(network.STA_IF)
