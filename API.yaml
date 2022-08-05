@@ -29,13 +29,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid header"
         '401':
           description: Invalid JWT token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid JWT token"
   /user/login:
     post:
       tags:
@@ -50,45 +54,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginSuccessResponse'
+              example:
+                message: "Login success"
         '400':
           description: Invalid body
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid body"
         '401':
           description: Invalid user or password!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid user or password!"
   /user/register:
     post:
       tags:
         - user
       summary: Register
       requestBody:
-        $ref: '#/components/schemas/UserRegisterRequest'
+        $ref: "#/components/requestBodies/userRegister"
       responses:
         '200':
-          description: registration success
+          description: Registration success
           content:
             application/json:
               schema:
-                type: string
-                example: Registration success
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Registration success"
         '404':
-          description: registration failure
+          description: Registration failure
           content:
             application/json:
               schema:
-                type: string
-                example: Registration failure
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Membership not found"
   /user/password:
     put:
       tags:
         - user
       summary: Change the password
+      security:
+        - auth: []
+          authMethod: []
+      requestBody:
+        content:
+          application/json:
+              schema:
+                properties:
+                  password:
+                    type: string
       responses:
         '200':
           description: Operation success
@@ -102,12 +124,9 @@ paths:
       tags:
         - user
       summary: Get other user's plant information
-      requestBody:
-        description: Send the token to backend
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserTokenRequest'
+      security:
+        - auth: []
+          authMethod: []
       responses:
         '200':
           description: Send other's information
@@ -120,34 +139,29 @@ paths:
       tags:
         - user
       summary: Registration success or in waiting list
-      requestBody: 
-        description: Send the token to backend
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserTokenRequest'
+      security:
+        - auth: []
+          authMethod: []
       responses:
         '200':
           description: Registration successful
-        '403':
-          description: Registration failed
+        # '403':
+        #   description: Registration failed
   /rent/plantInfo:
     post:
       tags:
         - user
-      requestBody: 
-        description: Send the token to backend
+      security:
+        - auth: []
+          authMethod: []
+      requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserTokenRequest'
+              $ref: '#/components/schemas/Plant'
       responses:
         '200':
           description: Get plant info
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlantInfo'
 
 
 # servers
@@ -175,6 +189,13 @@ components:
             $ref: '#/components/schemas/AuthRequest'
       description: 登入資訊
       required: true
+    userRegister:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRegisterRequest'
+      description: 註冊資訊
+      required: true
   schemas:
 
     # data
@@ -182,7 +203,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           format: uuid
         name:
           type: string
@@ -195,6 +216,7 @@ components:
     Rent:
       type: object
       properties:
+        # TODO: 上傳圖片格式
         plant:
           $ref: '#/components/schemas/Plant'
         container:
@@ -203,9 +225,6 @@ components:
     Plant:
       type: object
       properties:
-        id:
-          type: integer
-          format: int32
         name:
           type: string
         intro:
@@ -222,7 +241,7 @@ components:
     AuthRequest:
       type: object
       properties:
-        account:
+        email:
           type: string
         password:
           type: string
@@ -231,10 +250,7 @@ components:
       properties:
         email:
           type: string
-    UserTokenRequest:
-      properties:
-        Token:
-          type: string
+
 
     # response
     LoginSuccessResponse:
@@ -250,7 +266,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Rent'
-    ErrorResponse:
+    GenericResponse:
       type: object
       properties:
         message:
@@ -266,20 +282,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Rent'
-    UserRegisterResponse:
-      type: object
-      properties:
-        200:
-          description: registration success
-        404:
-          description: registration failure
     OtherUserPlantResponse:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Plant'
+            $ref: '#/components/schemas/Rent'
 
 
 
