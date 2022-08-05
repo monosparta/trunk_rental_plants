@@ -96,6 +96,14 @@ paths:
                 $ref: '#/components/schemas/GenericResponse'
               example:
                 message: "Membership not found"
+        '409':
+          description: User already exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "User already exist"
   /user/password:
     put:
       tags:
@@ -113,12 +121,29 @@ paths:
                     type: string
       responses:
         '200':
-          description: Operation success
+          description: Password updated
           content:
             application/json:
               schema:
-                type: string
-                example: Operation success
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Password updated"
+        '400':
+          description: Invalid header/body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid header/body"
+        '401':
+          description: Invalid JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid JWT token"
   /rent/list/others:
     get:
       tags:
@@ -134,6 +159,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OtherUserPlantResponse'
+        '400':
+          description: Invalid header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid header"
+        '401':
+          description: Invalid JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid JWT token"
   /rent/register:
     post:
       tags:
@@ -147,6 +188,22 @@ paths:
           description: Registration successful
         # '403':
         #   description: Registration failed
+        '400':
+          description: Invalid header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid header"
+        '401':
+          description: Invalid JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid JWT token"
   /rent/plantInfo:
     post:
       tags:
@@ -162,6 +219,22 @@ paths:
       responses:
         '200':
           description: Get plant info
+        '400':
+          description: Invalid header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid header"
+        '401':
+          description: Invalid JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid JWT token"
 
 
 # servers
