@@ -302,10 +302,12 @@ components:
           type: string
         email:
           type: string
-        card:
-          type: string
         phoneNumber:
           type: string
+        isDefaultPassword:
+          type: boolean
+        role:
+          type: integer
     Rent:
       type: object
       properties:
