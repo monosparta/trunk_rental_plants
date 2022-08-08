@@ -88,6 +88,14 @@ paths:
                 $ref: '#/components/schemas/GenericResponse'
               example:
                 message: "Registration success"
+        '400':
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid body"
         '404':
           description: Registration failure
           content:
@@ -186,6 +194,12 @@ paths:
       responses:
         '200':
           description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Registration successful"
         # '403':
         #   description: Registration failed
         '400':
@@ -218,7 +232,13 @@ paths:
               $ref: '#/components/schemas/Plant'
       responses:
         '200':
-          description: Get plant info
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Update successful"
         '400':
           description: Invalid header
           content:
