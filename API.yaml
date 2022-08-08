@@ -113,6 +113,38 @@ paths:
               example:
                 message: "User already exist"
   /user/password:
+    post:
+      tags:
+        - user
+      summary: Reset Password Request
+      requestBody:
+        $ref: "#/components/requestBodies/userRegister"
+      responses:
+        '200':
+          description: Request success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Request success"
+        '400':
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid body"
+        '404':
+          description: Unknown User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "User not found"
+
     put:
       tags:
         - user
