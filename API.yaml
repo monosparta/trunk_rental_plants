@@ -219,7 +219,7 @@ paths:
     post:
       tags:
         - user
-      summary: Registration success or in waiting list
+      summary: Rent registration
       security:
         - auth: []
           authMethod: []
@@ -254,6 +254,7 @@ paths:
     post:
       tags:
         - user
+      summary: Add plant information
       security:
         - auth: []
           authMethod: []
@@ -323,7 +324,7 @@ paths:
     get:
       tags:
         - admin
-      summary: Get rented information
+      summary: Get rented list
       security:
         - auth: []
           authMethod: []
@@ -384,7 +385,7 @@ paths:
     get:
       tags:
         - admin
-      summary: Get rented amount
+      summary: Get rents waiting for container
       security:
         - auth: []
           authMethod: []
