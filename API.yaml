@@ -335,6 +335,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  message:
+                    type: string
                   data:
                     type: array
                     items:
@@ -394,6 +396,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  message:
+                    type: string
                   data:
                     type: array
                     items:
@@ -419,14 +423,14 @@ paths:
                 $ref: '#/components/schemas/GenericResponse'
               example:
                 message: "Invalid JWT token"
-        '403':
-          description: Permission denied
+        '404':
+          description: Rent not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericResponse'
               example:
-                message: "Permission denied"
+                message: "Rent not found"
   /admin/rentedAmount:
     get:
       tags:
@@ -443,15 +447,15 @@ paths:
               schema:
                 type: object
                 properties:
+                  message:
+                    type: string
                   data:
-                    type: array
-                    items:
-                      type: object
-                      properties: 
-                        rented: 
-                          type: integer
-                        remain:
-                          type: integer
+                    type: object
+                    properties: 
+                      rented: 
+                        type: integer
+                      remain:
+                        type: integer
         '400':
           description: Invalid header
           content:
@@ -525,6 +529,14 @@ paths:
                 $ref: '#/components/schemas/GenericResponse'
               example:
                 message: "Permission denied"
+        '404':
+          description: Rent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Rent not found"
 
 # servers
 servers:
