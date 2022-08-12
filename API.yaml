@@ -273,7 +273,7 @@ paths:
                 imgPath:
                   type: string
                   format: binary
-                nickName:
+                nickname:
                   type: string
                 minHumid:
                   type: integer
