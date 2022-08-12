@@ -544,6 +544,71 @@ paths:
                 message: "User already exist"
 
   '/admin/rent/{rentId}':
+    put:
+      tags:
+        - admin
+      summary: Set container of rent as taken
+      security:
+        - auth: []
+          authMethod: []
+      parameters:
+      - name: rentId
+        in: path
+        description: ID of rent
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Update successful"
+        '400':
+          description: Invalid header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid header"
+        '401':
+          description: Invalid JWT token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Invalid JWT token"
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Permission denied"
+        '404':
+          description: Rent not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Rent not found"
+        '409':
+          description: Rent already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+              example:
+                message: "Rent already taken"
+
     delete:
       tags:
         - admin
