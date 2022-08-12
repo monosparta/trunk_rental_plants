@@ -271,7 +271,7 @@ paths:
                   type: string
                 intro:
                   type: string
-                imgPath:
+                image:
                   type: string
                   format: binary
                 nickname:
