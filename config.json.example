@@ -1,0 +1,28 @@
+{
+  "mqtt": {
+    "host": "",
+    "port": "1883",
+    "topic": "Plant/Data",
+    "username": "",
+    "password": ""
+  },
+
+  "soil": {
+    "pin": 32
+  },
+
+  "light":{
+    "sda": 21,
+    "scl": 22
+  },
+
+  "interval": {
+    "valid": 60,
+    "normal_duration": 1,
+    "deep_start": 0,
+    "deep_end": 6,
+    "deep_duration": 3600
+  },
+
+  "container_ID": 1
+}
