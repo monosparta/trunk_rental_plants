@@ -497,8 +497,6 @@ paths:
                   type: string
                 email:
                   type: string
-                phoneNumber:
-                  type: string
       responses:
         '200':
           description: Add Success
@@ -707,8 +705,6 @@ components:
         name:
           type: string
         email:
-          type: string
-        phoneNumber:
           type: string
         isDefaultPassword:
           type: boolean
