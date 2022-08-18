@@ -35,7 +35,7 @@ class RentalPlants():
             self.actual_time = time.localtime(time.time() + self.UTC_OFFSET)
 
             valid_time = self.data['interval']['normal_duration']
-            if 0 <=self.actual_time[3] <= 6:
+            if self.data['interval']['deep_start'] <= self.actual_time[3] <= self.data['interval']['deep_end']:
                 valid_time = self.data['interval']['deep_duration']
 
             valid_time += self.data['interval']['valid']
