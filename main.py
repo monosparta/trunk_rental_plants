@@ -53,6 +53,7 @@ class RentalPlants():
 
             # send the data to mqtt
             self.publisher.send_message(json.dumps(plant_data))
+            print(plant_data)
 
             # range of deepsleep mode
             if self.data['interval']['deep_start'] <=self.actual_time[3] <= self.data['interval']['deep_end']:
