@@ -227,9 +227,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericResponse'
+                type: object
+                properties:
+                  message:
+                    type: string
+                  waiting:
+                    type: boolean
               example:
                 message: "Registration successful"
+                waiting: true
         # '403':
         #   description: Registration failed
         '400':
