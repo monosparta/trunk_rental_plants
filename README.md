@@ -17,3 +17,7 @@
 ## 硬體接線圖
 
 ![硬體接線圖](image/README/1661916511186.png)
+
+### 零件腳位
+
+請參閱config.json.example
