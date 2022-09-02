@@ -6,6 +6,7 @@ from mqtt import MQTT
 from soil import Soil
 from bh1750 import BH1750
 
+
 class RentalPlants():
     def __init__(self):
         # read json file
@@ -29,6 +30,9 @@ class RentalPlants():
 
         self.bh1750 = BH1750(scl=self.data['light']['scl'], sda=self.data['light']['sda'])
 
+        # check if soil moisture is capacity type
+        self.is_capacity_soil_sensor = self.data['soil']['is_capacity_soil_sensor']
+
     def enable_sensor(self):
 
         while True:
@@ -41,7 +45,12 @@ class RentalPlants():
             valid_time += self.data['interval']['valid']
 
             # calculate the soil moisture data
-            soil_humi_percent = 100*(1 - self.soil.get_value() / 4095)
+            if self.is_capacity_soil_sensor is True:
+                # for capacity type soil moisture sensor
+                soil_humi_percent = 100*(1 - self.soil.get_value() / 4095)
+            else:
+                # for non capacity type soil moisture sensor
+                soil_humi_percent = (self.soil.get_value()/4095) * 100
 
             plant_data = {
                 'container_ID': self.data['container_ID'],
@@ -56,11 +65,12 @@ class RentalPlants():
             print(plant_data)
 
             # range of deepsleep mode
-            if self.data['interval']['deep_start'] <=self.actual_time[3] <= self.data['interval']['deep_end']:
+            if self.data['interval']['deep_start'] <= self.actual_time[3] <= self.data['interval']['deep_end']:
                 machine.deepsleep(self.data['interval']['deep_duration'] * 1000)
                 machine.reset()
             else:
                 time.sleep(self.data['interval']['normal_duration'])
+
 
 rental_planter = RentalPlants()
 rental_planter.enable_sensor()
