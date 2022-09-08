@@ -3,6 +3,7 @@
     "host": "",
     "port": "1883",
     "topic": "Plant/Data",
+    "error_topic": "Plant/Error",
     "username": "",
     "password": ""
   },
@@ -23,6 +24,12 @@
     "deep_start": 0,
     "deep_end": 6,
     "deep_duration": 3600
+  },
+  
+  "error": {
+    "log_limit": 10,
+    "error_retry": 10,
+    "retry_limit": 1800
   },
 
   "container_ID": 1

@@ -2,14 +2,15 @@ import gc
 import network
 import esp
 
+from errorlog import ErrorLogger
+
 esp.osdebug(None)
 gc.collect()
 
 # wifi list
 wifi_list = [
     {'ssid': 'monospace', 'password': '22012870'},
-    {'ssid': 'TrunkStudio-2.4G', 'password': '22019020'},
-    {'ssid': '204', 'password': '24632270'}
+    {'ssid': 'TrunkStudio-2.4G', 'password': '22019020'}
 ]
 
 station = network.WLAN(network.STA_IF)
@@ -36,3 +37,6 @@ if connected:
     print(station.ifconfig())
 else:
     print('No connection available!')
+    error_logger = ErrorLogger()
+    error_times = error_logger.add_error('WiFi connection error')
+    error_logger.retry(error_times);
