@@ -5,10 +5,11 @@ from machine import unique_id, reset
 
 
 class MQTT:
-    def __init__(self, host, topic, username, password, port=1883, keepalive=60):
+    def __init__(self, host, topic, username, password, error_topic=None, port=1883, keepalive=60):
         self.host = host
         self.port = port
         self.topic = topic
+        self.error_topic = error_topic
         self.username = username
         self.password = password
         self.keepalive = keepalive
@@ -26,11 +27,9 @@ class MQTT:
 
         self.publisher.connect()
 
-
-    def restart_and_reconnect(self):
-        print('Failed to connect to MQTT broker. Reconnecting...')
-        time.sleep(10)
-        reset()
-
     def send_message(self, msg):
         self.publisher.publish(self.topic, msg)
+
+    def send_error_message(self, msg):
+        if self.error_topic is not None:
+            self.publisher.publish(self.error_topic, msg)
